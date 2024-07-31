@@ -1,0 +1,24 @@
+services:
+  Feedback.auth.AuthRepository:
+    class: ../../Contexts/Auth/infrastructure/persistence/mongo/MongoAuthRepository
+    arguments: ["@Shared.ConnectionManager"]
+
+  Feedback.auth.AuthLogin:
+    class: ../../Contexts/Auth/application/Login/AuthLogin
+    arguments: ["@Feedback.auth.AuthRepository", "@Shared.JwtManager"]
+
+  Feedback.auth.AuthQueryHandler:
+    class: ../../Contexts/Auth/application/Login/AuthQueryHandler
+    arguments: ["@Feedback.auth.AuthLogin"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.auth.AuthCurrentUser:
+    class: ../../Contexts/Auth/application/CurrentUser/AuthCurrentUser
+    arguments: ["@Feedback.auth.AuthRepository"]
+
+  Feedback.auth.AuthCurrentUserQueryHandler:
+    class: ../../Contexts/Auth/application/CurrentUser/AuthCurrentUserQueryHandler
+    arguments: ["@Feedback.auth.AuthCurrentUser"]
+    tags:
+      - { name: 'queryHandler' }

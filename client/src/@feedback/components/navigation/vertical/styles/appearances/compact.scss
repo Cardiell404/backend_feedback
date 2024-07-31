@@ -1,0 +1,112 @@
+/* Variables */
+:root {
+    --feedback-vertical-navigation-compact-width: 112px;
+}
+
+feedback-vertical-navigation {
+
+    /* Compact appearance overrides */
+    &.feedback-vertical-navigation-appearance-compact {
+        width: var(--feedback-vertical-navigation-compact-width);
+        min-width: var(--feedback-vertical-navigation-compact-width);
+        max-width: var(--feedback-vertical-navigation-compact-width);
+
+        /* Left positioned */
+        &.feedback-vertical-navigation-position-left {
+
+            /* Side mode */
+            &.feedback-vertical-navigation-mode-side {
+                margin-left: calc(var(--feedback-vertical-navigation-compact-width) * -1);
+            }
+
+            /* Opened */
+            &.feedback-vertical-navigation-opened {
+                margin-left: 0;
+            }
+        }
+
+        /* Right positioned */
+        &.feedback-vertical-navigation-position-right {
+
+            /* Side mode */
+            &.feedback-vertical-navigation-mode-side {
+                margin-right: calc(var(--feedback-vertical-navigation-compact-width) * -1);
+            }
+
+            /* Opened */
+            &.feedback-vertical-navigation-opened {
+                margin-right: 0;
+            }
+
+            /* Aside wrapper */
+            .feedback-vertical-navigation-aside-wrapper {
+                left: auto;
+                right: var(--feedback-vertical-navigation-compact-width);
+            }
+        }
+
+        /* Wrapper */
+        .feedback-vertical-navigation-wrapper {
+
+            /* Content */
+            .feedback-vertical-navigation-content {
+
+                > feedback-vertical-navigation-aside-item,
+                > feedback-vertical-navigation-basic-item {
+
+                    .feedback-vertical-navigation-item-wrapper {
+                        margin: 4px 8px 0 8px;
+
+                        .feedback-vertical-navigation-item {
+                            flex-direction: column;
+                            justify-content: center;
+                            padding: 12px;
+                            border-radius: 6px;
+
+                            .feedback-vertical-navigation-item-icon {
+                                margin-right: 0;
+                            }
+
+                            .feedback-vertical-navigation-item-title-wrapper {
+                                margin-top: 8px;
+
+                                .feedback-vertical-navigation-item-title {
+                                    font-size: 12px;
+                                    font-weight: 500;
+                                    text-align: center;
+                                    line-height: 16px;
+                                }
+
+                                .feedback-vertical-navigation-item-subtitle {
+                                    display: none !important;
+                                }
+                            }
+
+                            .feedback-vertical-navigation-item-badge {
+                                position: absolute;
+                                top: 12px;
+                                left: 64px;
+                            }
+                        }
+                    }
+
+                    > feedback-vertical-navigation-collapsable-item {
+                        display: none
+                    }
+
+                    > feedback-vertical-navigation-group-item {
+
+                        > .feedback-vertical-navigation-item-wrapper {
+                            display: none
+                        }
+                    }
+                }
+            }
+        }
+
+        /* Aside wrapper */
+        .feedback-vertical-navigation-aside-wrapper {
+            left: var(--feedback-vertical-navigation-compact-width);
+        }
+    }
+}

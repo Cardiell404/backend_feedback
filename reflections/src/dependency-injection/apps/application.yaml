@@ -1,0 +1,29 @@
+services:
+
+  Apps.feedback.controllers.StatusGetController:
+    class: ../../controllers/StatusGetController
+    arguments: []
+
+  Apps.feedback.controllers.ReflectionPostController:
+    class: ../../controllers/ReflectionPostController
+    arguments: ["@Shared.CommandBus"]
+
+  Apps.feedback.controllers.ReflectionPutController:
+    class: ../../controllers/ReflectionPutController
+    arguments: ["@Shared.CommandBus"]
+
+  Apps.feedback.controllers.SendReflectionController:
+    class: ../../controllers/SendReflectionController
+    arguments: ["@Shared.CommandBus"]
+
+  Apps.feedback.controllers.ReflectionGetController:
+    class: ../../controllers/ReflectionGetController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.ReflectionGetByCriteriaController:
+    class: ../../controllers/ReflectionGetByCriteriaController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.ReflectionDeleteController:
+    class: ../../controllers/ReflectionDeleteController
+    arguments: ["@Shared.CommandBus"]

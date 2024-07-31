@@ -1,0 +1,71 @@
+.mx-20 {
+    margin-left: 16rem !important;
+    margin-right: 16rem !important;
+}
+
+.bg-blue{
+    background: rgba(29, 29, 164, 0.3);
+}
+
+.bg-red{
+    background: rgba(164,29,68, 0.3);
+}
+
+.bg-purple{
+    background: rgba(80,2,111, 0.3);
+}
+
+.bg-green{
+    background: rgba(2, 111, 18, 0.3) !important;
+}
+
+.text-red {
+    color: rgba(164,29,68, .8) !important;
+}
+
+.text-blue {
+    color: rgba(29, 29, 164, .8) !important;
+}
+
+.text-purple {
+    color: rgba(80,2,111, .8) !important;
+}
+
+.text-green{
+    color: rgba(2, 111, 18, .8) !important;
+}
+
+.header-card-blue{
+    background: rgb(2,0,36);
+    background: linear-gradient(125deg, rgba(2,0,36,1) 0%, rgba(29,29,164,1) 0%, rgba(2,123,241,1) 100%);
+}
+
+.header-card-red{
+    background: rgb(2,0,36);
+    background: linear-gradient(125deg, rgba(2,0,36,1) 0%, rgba(164,29,68,1) 0%, rgba(255,38,119,1) 100%);
+}
+
+.header-card-purple{
+    background: rgb(2,0,36);
+    background: linear-gradient(125deg, rgba(2,0,36,1) 0%, rgba(80,2,111,1) 0%, rgba(205,38,255,1) 100%);
+}
+
+a:hover {
+    .animated-icon {
+        transform-style: preserve-3d;
+        animation-name: rotate;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+    
+    }
+    
+    @keyframes rotate {
+        0%{
+            transform: rotate3d(0,0,0,0)
+        }
+        100% {
+            transform: rotate3d(0,1,0,360deg);
+        }
+    }
+}

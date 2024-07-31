@@ -1,0 +1,24 @@
+<div class="flex flex-col flex-auto w-full overflow-y-auto">
+    <!-- Header -->
+        <div class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8">
+            <h1 class="text-3xl font-bold">What do you want to create?</h1>
+            <button mat-icon-button [tabIndex]="-1" (click)="matDialogRef.close()">
+                <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+            </button>
+        </div>
+    <div class="flex flex-col flex-0 justify-center items-start w-full p-6 sm:p-8 space-y-6 overflow-y-auto">
+            <!-- Feedback Card -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <ng-container *ngFor="let card of universalCards">
+                <a class="flex flex-col items-center text-center w-56 p-8 rounded-lg shadow bg-card rounded-lg hover:shadow-xl transition-shadow duration-150 ease-in-out bg-gray-400 bg-opacity-12"
+                    [routerLink]="[card?.link]">
+                    <div class="flex p-4 rounded-full bg-{{card?.color}} text-{{card?.color}}">
+                        <mat-icon class="text-current w-10 h-10 animated-icon" [svgIcon]="card?.icon"></mat-icon>
+                    </div>
+                    <div class="mt-10 text-lg font-medium leading-5">{{card?.title}}</div>
+                    <div class="mt-8 mb-8 line-clamp-2 text-secondary">{{card?.description}}</div>
+                </a>
+            </ng-container>
+        </div>           
+    </div>
+</div>

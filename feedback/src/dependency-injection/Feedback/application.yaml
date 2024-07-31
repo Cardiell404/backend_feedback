@@ -1,0 +1,55 @@
+services:
+
+  Feedback.feedback.FeedbackRepository:
+    class: ../../infrastructure/persistence/mongo/MongoFeedbackRepository
+    arguments: ['@Shared.ConnectionManager']
+
+  Feedback.feedback.FeedbackCreator:
+    class: ../../application/FeedbackCreator
+    arguments: ['@Feedback.feedback.FeedbackRepository']
+
+  Feedback.feedback.CreateFeedbackCommandHandler:
+    class: ../../application/CreateFeedbackCommandHandler
+    arguments: ['@Feedback.feedback.FeedbackCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.feedback.SendFeedbackCreator:
+    class: ../../application/Send/SendFeedbackCreator
+    arguments: ['@Feedback.feedback.FeedbackRepository']
+
+  Feedback.feedback.SendFeedbackCommandHandler:
+    class: ../../application/Send/SendFeedbackCommandHandler
+    arguments: ['@Feedback.feedback.SendFeedbackCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.feedback.FeedbackUpdater:
+    class: ../../application/Update/FeedbackUpdater
+    arguments: ['@Feedback.feedback.FeedbackRepository']
+
+  Feedback.feedback.UpdateFeedbackCommandHandler:
+    class: ../../application/Update/UpdateFeedbackCommandHandler
+    arguments: ['@Feedback.feedback.FeedbackUpdater']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.feedback.FeedbackFinder:
+    class: '../../application/Find/FeedbackFinder'
+    arguments: ["@Feedback.feedback.FeedbackRepository"]
+
+  Feedback.feedback.FindFeedbackQueryHandler:
+    class: '../../application/Find/FindFeedbackQueryHandler'
+    arguments: ["@Feedback.feedback.FeedbackFinder"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.feedback.FeedbackByCriteriaSearcher:
+    class: '../../application/SearchByCriteria/FeedbackByCriteriaSearcher'
+    arguments: ["@Feedback.feedback.FeedbackRepository"]
+
+  Feedback.feedback.SearchFeedbackByCriteriaQueryHandler:
+    class: '../../application/SearchByCriteria/SearchFeedbackByCriteriaQueryHandler'
+    arguments: ["@Feedback.feedback.FeedbackByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }

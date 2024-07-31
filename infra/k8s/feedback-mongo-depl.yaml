@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feedback-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feedback-mongo
+  template:
+    metadata:
+      labels:
+        app: feedback-mongo
+    spec:
+      containers:
+        - name: feedback-mongo
+          image:  mongo:latest
+          ports:
+          - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feedback-mongo-srv
+spec:
+  selector:
+    app: feedback-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

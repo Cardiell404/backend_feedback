@@ -1,0 +1,72 @@
+<div class="feedback-vertical-navigation-wrapper">
+    <div class="feedback-vertical-navigation-header">
+        <ng-content select="[feedbackVerticalNavigationHeader]"></ng-content>
+    </div>
+    <div class="feedback-vertical-navigation-content" feedbackScrollbar [feedbackScrollbarOptions]="{wheelPropagation: inner, suppressScrollX: true}" #navigationContent>
+        <div class="feedback-vertical-navigation-content-header">
+            <ng-content select="[feedbackVerticalNavigationContentHeader]"></ng-content>
+        </div>
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+            <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
+                <ng-container *ngIf="item.type === 'aside'">
+                    <feedback-vertical-navigation-aside-item
+                        [item]="item"
+                        [name]="name"
+                        [activeItemId]="activeAsideItemId"
+                        [autoCollapse]="autoCollapse"
+                        [skipChildren]="true"
+                        (click)="toggleAside(item)"></feedback-vertical-navigation-aside-item>
+                </ng-container>
+
+                <ng-container *ngIf="item.type === 'basic'">
+                    <feedback-vertical-navigation-basic-item [item]="item" [name]="name"></feedback-vertical-navigation-basic-item>
+                </ng-container>
+
+                <ng-container *ngIf="item.type === 'collapsable'">
+                    <feedback-vertical-navigation-collapsable-item [item]="item" [name]="name" [autoCollapse]="autoCollapse"></feedback-vertical-navigation-collapsable-item>
+                </ng-container>
+
+                <ng-container *ngIf="item.type === 'divider'">
+                    <feedback-vertical-navigation-divider-item [item]="item" [name]="name"></feedback-vertical-navigation-divider-item>
+                </ng-container>
+
+                <ng-container *ngIf="item.type === 'group'">
+                    <feedback-vertical-navigation-group-item [item]="item" [name]="name" [autoCollapse]="autoCollapse"></feedback-vertical-navigation-group-item>
+                </ng-container>
+
+                <ng-container *ngIf="item.type === 'spacer'">
+                    <feedback-vertical-navigation-spacer-item [item]="item" [name]="name"></feedback-vertical-navigation-spacer-item>
+                </ng-container>
+
+            </ng-container>
+        </ng-container>
+
+        <div class="feedback-vertical-navigation-content-footer">
+            <ng-content select="[feedbackVerticalNavigationContentFooter]"></ng-content>
+        </div>
+    </div>
+
+    <div class="feedback-vertical-navigation-footer">
+        <ng-content select="[feedbackVerticalNavigationFooter]"></ng-content>
+    </div>
+
+</div>
+
+<ng-container *ngIf="activeAsideItemId">
+    <div class="feedback-vertical-navigation-aside-wrapper"
+        feedbackScrollbar
+        [feedbackScrollbarOptions]="{wheelPropagation: false, suppressScrollX: true}"
+        [@fadeInLeft]="position === 'left'"
+        [@fadeInRight]="position === 'right'"
+        [@fadeOutLeft]="position === 'left'"
+        [@fadeOutRight]="position === 'right'">
+
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+            <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
+                <ng-container *ngIf="item.type === 'aside' && item.id === activeAsideItemId">
+                    <feedback-vertical-navigation-aside-item [item]="item" [name]="name" [autoCollapse]="autoCollapse"></feedback-vertical-navigation-aside-item>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>

@@ -1,0 +1,71 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+    - host: feedback.dev
+      http:
+        paths:
+          - path: /api/auth/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-srv
+                port:
+                  number: 3000
+          - path: /api/employees/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: employees-srv
+                port:
+                  number: 3000
+          - path: /api/users/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-srv
+                port:
+                  number: 3000
+          - path: /api/reflections/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: reflections-srv
+                port:
+                  number: 3000
+          - path: /api/conversations/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: conversations-srv
+                port:
+                  number: 3000
+          - path: /api/feedback/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: feedback-srv
+                port:
+                  number: 3000
+          - path: /api/goals/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: goals-srv
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000
+                  

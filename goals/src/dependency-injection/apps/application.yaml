@@ -1,0 +1,25 @@
+services:
+
+  Apps.feedback.controllers.StatusGetController:
+    class: ../../controllers/StatusGetController
+    arguments: []
+
+  Apps.feedback.controllers.GoalPostController:
+    class: ../../controllers/GoalPostController
+    arguments: ["@Shared.CommandBus"]
+
+  Apps.feedback.controllers.GoalPutController:
+    class: ../../controllers/GoalPutController
+    arguments: ["@Shared.CommandBus"]
+
+  Apps.feedback.controllers.GoalGetByIdController:
+    class: ../../controllers/GoalGetByIdController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.GoalsGetByCriteriaController:
+    class: ../../controllers/GoalsGetByCriteriaController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.GoalDeleteController:
+    class: ../../controllers/GoalDeleteController
+    arguments: ["@Shared.CommandBus"]

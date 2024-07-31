@@ -1,0 +1,34 @@
+<div class="feedback-alert-container" *ngIf="!dismissible || dismissible && !dismissed" [@fadeIn]="!dismissed" [@fadeOut]="!dismissed">
+
+    <div class="feedback-alert-border" *ngIf="appearance === 'border'"></div>
+
+    <div class="feedback-alert-icon" *ngIf="showIcon">
+        <div class="feedback-alert-custom-icon">
+            <ng-content select="[feedbackAlertIcon]"></ng-content>
+        </div>
+
+        <div class="feedback-alert-default-icon">
+            <mat-icon *ngIf="type === 'primary'" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+            <mat-icon *ngIf="type === 'accent'"  [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+            <mat-icon *ngIf="type === 'warn'" [svgIcon]="'heroicons_solid:x-circle'"></mat-icon>
+            <mat-icon *ngIf="type === 'basic'" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+            <mat-icon *ngIf="type === 'info'" [svgIcon]="'heroicons_solid:information-circle'"></mat-icon>
+            <mat-icon *ngIf="type === 'success'" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+            <mat-icon *ngIf="type === 'warning'" [svgIcon]="'heroicons_solid:exclamation'"></mat-icon>
+            <mat-icon *ngIf="type === 'error'" [svgIcon]="'heroicons_solid:x-circle'"></mat-icon>
+        </div>
+    </div>
+
+    <div class="feedback-alert-content">
+        <div class="feedback-alert-title">
+            <ng-content select="[feedbackAlertTitle]"></ng-content>
+        </div>
+        <div class="feedback-alert-message">
+            <ng-content></ng-content>
+        </div>
+    </div>
+
+    <button class="feedback-alert-dismiss-button" mat-icon-button (click)="dismiss()">
+        <mat-icon [svgIcon]="'heroicons_solid:x'"></mat-icon>
+    </button>
+</div>

@@ -1,0 +1,25 @@
+services:
+
+  Apps.feedback.controllers.StatusGetController:
+    class: ../../controllers/StatusGetController
+    arguments: []
+
+  Apps.feedback.controllers.EmployeePostController:
+    class: ../../controllers/EmployeePostController
+    arguments: ["@Shared.CommandBus"]
+
+  Apps.feedback.controllers.EmployeePutController:
+    class: ../../controllers/EmployeePutController
+    arguments: ["@Shared.CommandBus"]
+  
+  Apps.feedback.controllers.EmployeeGetByIdController:
+    class: ../../controllers/EmployeeGetByIdController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.EmployeesGetByCriteriaController:
+    class: ../../controllers/EmployeesGetByCriteriaController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.EmployeeDeleteController:
+    class: ../../controllers/EmployeeDeleteController
+    arguments: ["@Shared.CommandBus"]

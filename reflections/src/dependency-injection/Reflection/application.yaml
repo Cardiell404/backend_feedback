@@ -1,0 +1,55 @@
+services:
+
+  Feedback.reflection.ReflectionRepository:
+    class: '../../infrastructure/persistence/mongo/MongoReflectionRepository'
+    arguments: ['@Shared.ConnectionManager']
+
+  Feedback.reflection.ReflectionCreator:
+    class: ../../application/ReflectionCreator
+    arguments: ['@Feedback.reflection.ReflectionRepository']
+
+  Feedback.reflection.CreateReflectionCommandHandler:
+    class: ../../application/CreateReflectionCommandHandler
+    arguments: ['@Feedback.reflection.ReflectionCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.reflection.SendReflectionCreator:
+    class: ../../application/Send/SendReflectionCreator
+    arguments: ['@Feedback.reflection.ReflectionRepository']
+
+  Feedback.reflection.SendReflectionCommandHandler:
+    class: ../../application/Send/SendReflectionCommandHandler
+    arguments: ['@Feedback.reflection.SendReflectionCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.reflection.ReflectionUpdater:
+    class: ../../application/Update/ReflectionUpdater
+    arguments: ['@Feedback.reflection.ReflectionRepository']
+
+  Feedback.reflection.UpdateReflectionCommandHandler:
+    class: ../../application/Update/UpdateReflectionCommandHandler
+    arguments: ['@Feedback.reflection.ReflectionUpdater']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.reflection.ReflectionFinder:
+    class: '../../application/Find/ReflectionFinder'
+    arguments: ["@Feedback.reflection.ReflectionRepository"]
+
+  Feedback.reflection.FindReflectionQueryHandler:
+    class: '../../application/Find/FindReflectionQueryHandler'
+    arguments: ["@Feedback.reflection.ReflectionFinder"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.reflection.ReflectionByCriteriaSearcher:
+    class: '../../application/SearchByCriteria/ReflectionByCriteriaSearcher'
+    arguments: ["@Feedback.reflection.ReflectionRepository"]
+
+  Feedback.reflection.SearchReflectionByCriteriaQueryHandler:
+    class: '../../application/SearchByCriteria/SearchReflectionByCriteriaQueryHandler'
+    arguments: ["@Feedback.reflection.ReflectionByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }

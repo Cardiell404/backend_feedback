@@ -1,0 +1,70 @@
+<div class="flex flex-col h-full w-full overflow-y-auto" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="150" (scrolled)="onScroll()">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-4  sm:pt-8 sm:px-10">
+        <div class="flex-1 min-w-0"> </div>
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <button class="ml-3" mat-flat-button [color]="'primary'" (click)="addFeedback()">
+                <span class="ml-2">Create</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-col items-center h-full m-8 rounded-lg bg-card border-t-4 bg-card dark:bg-transparent border-blue shadow-md">
+        <div class="flex flex-row justify-start p-8 w-full">
+            <div>
+                <h1 class="text-2xl font-bold">My Feedback</h1>
+                <p>All feedback you are a participant in</p>
+            </div>
+        </div>
+            <ng-container *ngIf="feedback.length > 0; else noFeedback">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 w-full h-full p-8">
+                    <ng-container *ngFor="let card of feedback">
+                        <a class="flex flex-col w-full h-72 p-2 rounded-lg shadow bg-card rounded-lg hover:shadow-xl transition-shadow duration-150 ease-in-out border-2" [routerLink]="[card?.id]">
+                            <ng-container *ngIf="card.responses?.length">
+                                <div class="flex items-center mt-6 -space-x-1.5">
+                                    <ng-container *ngFor="let member of card.responses.slice(0, 4); trackBy: trackByFn">
+                                        <ng-container *ngIf="member.avatar">
+                                            <img class="flex-0 w-14 h-14 rounded-full ring ring-offset-1 ring-bg-card ring-offset-transparent object-cover" [src]="member.avatar" alt="Member avatar">
+                                        </ng-container>
+                                        <ng-container *ngIf="!member.avatar">
+                                            <div class="flex flex-0 items-center justify-center w-14 h-14 rounded-full ring ring-offset-1 ring-bg-card ring-offset-transparent bg-gray-200 text-secondary font-bold">
+                                                <p class="text-2xl">{{member.name?.charAt(0)}}{{member.lastName?.charAt(0)}}</p>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="card.responses.length == 1">
+                                        <p class="text-xl font-bold" style="margin-left:1rem !important;">{{card.responses[0].name}} {{card.responses[0].lastName}}</p>
+                                    </ng-container>
+                                    <ng-container *ngIf="card.responses.length > 4">
+                                        <div class="flex flex-0 items-center justify-center w-14 h-14 rounded-full ring ring-offset-1 ring-bg-card ring-offset-transparent bg-gray-200 text-gray-500">
+                                            <div class="text-md font-md">
+                                                +{{ card.responses.slice(4).length }}
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <h1 class="mt-6 text-lg font-medium leading-5">{{card.title}}</h1>
+                            <h1 class="line-clamp-2 text-secondary mt-1">{{card.description}}</h1>
+                            <h2 class="line-clamp-2 text-secondary mt-1">Jul 15</h2>
+                            <div class="mt-4 text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500 py-0.5 px-3 rounded-full text-lg font-semibold w-20">
+                                Shared
+                            </div>
+                        </a>
+                    </ng-container>
+                </div>
+            </ng-container>   
+            <ng-template #noFeedback>
+                <div class="flex flex-auto flex-col items-center justify-center h-full">
+                    <div class="flex p-4 rounded-full bg-blue text-blue">
+                        <mat-icon class="icon-size-24 text-current" [svgIcon]="'heroicons_outline:office-building'"></mat-icon>
+                    </div>
+                    <div class="mt-4 text-4xl font-semibold tracking-tight text-secondary">Looking for Feedback?</div>
+                    <h1 class="line-clamp-2 text-lg text-secondary mt-1">Create feedback please.</h1>
+                </div>
+            </ng-template>        
+        </div>
+</div>
+
+<div class="absolute invisible w-0 h-0 opacity-0 pointer-events-none">
+    <router-outlet></router-outlet>
+</div>

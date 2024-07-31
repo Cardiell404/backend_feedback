@@ -1,0 +1,15 @@
+services:
+
+  Feedback.employee.EmployeeRepository:
+    class: ../../Contexts/Employees/infrastructure/persistence/mongo/MongoEmployeeRepository
+    arguments: ['@Shared.ConnectionManager']
+
+  Feedback.employee.EmployeeEventCreator:
+    class: ../../Contexts/Employees/application/Events/Created/EmployeeCreator
+    arguments: ['@Feedback.employee.EmployeeRepository']
+
+  Feedback.employee.EmployeeCreated:
+    class: ../../Contexts/Employees/application/Events/Created/EmployeeCreated
+    arguments: ['@Feedback.employee.EmployeeEventCreator']
+    tags:
+      - { name: 'domainEventSubscriber' }

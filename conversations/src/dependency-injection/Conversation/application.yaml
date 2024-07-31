@@ -1,0 +1,55 @@
+services:
+
+  Feedback.conversation.ConversationRepository:
+    class: '../../infrastructure/persistence/mongo/MongoConversationRepository'
+    arguments: ['@Shared.ConnectionManager']
+
+  Feedback.conversation.ConversationCreator:
+    class: ../../application/ConversationCreator
+    arguments: ['@Feedback.conversation.ConversationRepository']
+
+  Feedback.conversation.CreateConversationCommandHandler:
+    class: ../../application/CreateConversationCommandHandler
+    arguments: ['@Feedback.conversation.ConversationCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.conversation.SendConversationCreator:
+    class: ../../application/Send/SendConversationCreator
+    arguments: ['@Feedback.conversation.ConversationRepository']
+
+  Feedback.conversation.SendConversationCommandHandler:
+    class: ../../application/Send/SendConversationCommandHandler
+    arguments: ['@Feedback.conversation.SendConversationCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.conversation.ConversationUpdater:
+    class: ../../application/Update/ConversationUpdater
+    arguments: ['@Feedback.conversation.ConversationRepository']
+
+  Feedback.conversation.UpdateConversationCommandHandler:
+    class: ../../application/Update/UpdateConversationCommandHandler
+    arguments: ['@Feedback.conversation.ConversationUpdater']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.conversation.ConversationFinder:
+    class: '../../application/Find/ConversationFinder'
+    arguments: ["@Feedback.conversation.ConversationRepository"]
+
+  Feedback.conversation.FindConversationQueryHandler:
+    class: '../../application/Find/FindConversationQueryHandler'
+    arguments: ["@Feedback.conversation.ConversationFinder"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.conversation.ConversationByCriteriaSearcher:
+    class: '../../application/SearchByCriteria/ConversationByCriteriaSearcher'
+    arguments: ["@Feedback.conversation.ConversationRepository"]
+
+  Feedback.conversation.SearchConversationByCriteriaQueryHandler:
+    class: '../../application/SearchByCriteria/SearchConversationByCriteriaQueryHandler'
+    arguments: ["@Feedback.conversation.ConversationByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }

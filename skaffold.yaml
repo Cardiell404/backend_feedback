@@ -1,0 +1,67 @@
+apiVersion: skaffold/v3
+kind: Config
+manifests:
+ rawYaml:
+ - ./infra/k8s/*
+deploy:
+ kubectl: {}
+build:
+  local:
+    push: false
+  artifacts:
+    - image: cardiell1/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: cardiell1/employees
+      context: employees
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: cardiell1/conversations
+      context: conversations
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: cardiell1/reflections
+      context: reflections
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: cardiell1/feedback
+      context: feedback
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: cardiell1/goals
+      context: goals
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: cardiell1/feedback-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.ts'
+            dest: .

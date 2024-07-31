@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feedback-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feedback
+  template:
+    metadata:
+      labels:
+        app: feedback
+    spec:
+      containers:
+        - name: feedback
+          image: cardiell1/feedback
+          ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feedback-srv
+spec:
+  selector:
+    app: feedback
+  ports:
+    - name: feedback
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

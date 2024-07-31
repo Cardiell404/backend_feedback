@@ -1,0 +1,21 @@
+<ng-container *ngIf="flippable">
+
+    <div class="feedback-card-front">
+        <ng-content select="[feedbackCardFront]"></ng-content>
+    </div>
+
+    <div class="feedback-card-back">
+        <ng-content select="[feedbackCardBack]"></ng-content>
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="!flippable">
+
+    <ng-content></ng-content>
+
+    <div class="feedback-card-expansion" *ngIf="expanded" [@expandCollapse]>
+        <ng-content select="[feedbackCardExpansion]"></ng-content>
+    </div>
+
+</ng-container>

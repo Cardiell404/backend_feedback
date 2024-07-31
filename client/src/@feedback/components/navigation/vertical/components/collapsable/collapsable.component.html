@@ -1,0 +1,56 @@
+<div class="feedback-vertical-navigation-item-wrapper" [class.feedback-vertical-navigation-item-has-subtitle]="!!item.subtitle" [ngClass]="item.classes?.wrapper">
+    <div class="feedback-vertical-navigation-item" [ngClass]="{'feedback-vertical-navigation-item-disabled': item.disabled}" [matTooltip]="item.tooltip || ''" (click)="toggleCollapsable()">
+        <ng-container *ngIf="item.icon">
+            <mat-icon class="feedback-vertical-navigation-item-icon" [ngClass]="item.classes?.icon" [svgIcon]="item.icon"></mat-icon>
+        </ng-container>
+
+        <div class="feedback-vertical-navigation-item-title-wrapper">
+            <div class="feedback-vertical-navigation-item-title">
+                <span [ngClass]="item.classes?.title">
+                    {{item.title}}
+                </span>
+            </div>
+            <ng-container *ngIf="item.subtitle">
+                <div class="feedback-vertical-navigation-item-subtitle">
+                    <span [ngClass]="item.classes?.subtitle">
+                        {{item.subtitle}}
+                    </span>
+                </div>
+            </ng-container>
+        </div>
+
+        <ng-container *ngIf="item.badge">
+            <div class="feedback-vertical-navigation-item-badge">
+                <div class="feedback-vertical-navigation-item-badge-content" [ngClass]="item.badge.classes">
+                    {{item.badge.title}}
+                </div>
+            </div>
+        </ng-container>
+        <mat-icon class="feedback-vertical-navigation-item-arrow icon-size-4" [svgIcon]="'heroicons_solid:chevron-right'"></mat-icon>
+    </div>
+</div>
+<div class="feedback-vertical-navigation-item-children" *ngIf="!isCollapsed" @expandCollapse>
+    <ng-container *ngFor="let item of item.children; trackBy: trackByFn">
+        <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
+            <ng-container *ngIf="item.type === 'basic'">
+                <feedback-vertical-navigation-basic-item [item]="item" [name]="name"></feedback-vertical-navigation-basic-item>
+            </ng-container>
+
+            <ng-container *ngIf="item.type === 'collapsable'">
+                <feedback-vertical-navigation-collapsable-item [item]="item" [name]="name" [autoCollapse]="autoCollapse"></feedback-vertical-navigation-collapsable-item>
+            </ng-container>
+
+            <ng-container *ngIf="item.type === 'divider'">
+                <feedback-vertical-navigation-divider-item [item]="item" [name]="name"></feedback-vertical-navigation-divider-item>
+            </ng-container>
+
+            <ng-container *ngIf="item.type === 'group'">
+                <feedback-vertical-navigation-group-item [item]="item" [name]="name"></feedback-vertical-navigation-group-item>
+            </ng-container>
+
+            <ng-container *ngIf="item.type === 'spacer'">
+                <feedback-vertical-navigation-spacer-item [item]="item" [name]="name"></feedback-vertical-navigation-spacer-item>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</div>

@@ -1,0 +1,104 @@
+<div class="flex flex-auto overflow-y-auto h-full">
+    <form [formGroup]="conversationForm" class="flex flex-col flex-auto w-full p-2 sm:p-2 overflow-y-auto" >
+        <div class="flex flex-0 items-center justify-between h-16 mb-2"> 
+            <!-- User info -->
+            <div class="flex flex-column items-center align-center">
+                <ng-container *ngIf="false">
+                    <img class="flex-0 w-14 h-14 rounded-full ring ring-offset-1 ring-bg-card ring-offset-transparent object-cover" [src]="member.avatar" alt="Member avatar">
+                </ng-container>
+                <ng-container *ngIf="true">
+                    <div class="flex flex-0 items-center justify-center w-14 h-14 rounded-full ring ring-offset-1 ring-bg-card ring-offset-transparent bg-gray-200 text-secondary font-bold">
+                        <p class="text-2xl">{{'C'}}{{'G'}}</p>
+                    </div>
+                </ng-container>
+                <p class="font-semibold ml-2">{{user.name}}</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <p class="font-semibold">Conversation type</p>
+                <h1 class="text-3xl font-bold">Checkpoint Conversations</h1>
+            </div>
+            <div class=" flex flex-row items-center">
+                <button mat-flat-button [color]="'primary'" [disabled]="conversationForm.invalid" (click)="createConversation()">
+                    <span class="ml-2">Create</span>
+                </button>
+                <button class="ml-2" mat-icon-button [color]="'primary'" [tabIndex]="-1" (click)="matDialogRef.close()">
+                    <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-divider></mat-divider> 
+        <div class="flex flex-row h-full">
+            <!-- Formulario -->
+            <div class="w-3/4 flex justify-center mt-12">
+                <div class="w-160 ">
+                    <!-- Title -->
+                    <div>
+                        <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                            <mat-label>Title</mat-label>
+                            <textarea matInput [formControlName]="'title'" [spellcheck]="false" cdkTextareaAutosize #titleField></textarea>
+                        </mat-form-field>
+                    </div>
+            
+                    <mat-divider class="mt-12 mb-12"></mat-divider>
+            
+                    <!-- Privacy and Due date -->
+                    <div class="flex flex-col mt-8">
+                        <p class="font-semibold">Conversation details</p>
+                        <div class="flex flex-wrap items-center">
+                            <!-- Due date -->
+                            <div>
+                                <div class="relative flex items-center mt-1.5 px-4 leading-9 rounded-full cursor-pointer" (click)="dueDatePicker.open()"
+                                [ngClass]="{'text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700': !conversation?.createDate,
+                                                'text-green-800 bg-green-200 dark:text-green-100 dark:bg-green-500': conversation?.createDate && !isOverdue(),
+                                                'text-red-800 bg-red-200 dark:text-red-100 dark:bg-red-500': conversation?.createDate && isOverdue()}">
+                                    <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                                    <span class="ml-2 text-md font-medium">
+                                        <ng-container *ngIf="conversation?.createDate">{{conversation.createDate | date:'longDate'}}</ng-container>
+                                        <ng-container *ngIf="!conversation?.createDate">Add due date</ng-container>
+                                    </span>
+                                    <mat-form-field class="feedback-mat-dense invisible absolute inset-0 -mt-2.5 opacity-0 pointer-events-none" [subscriptSizing]="'dynamic'">
+                                        <input matInput [formControlName]="'dueDate'" [matDatepicker]="dueDatePicker">
+                                        <mat-datepicker #dueDatePicker>
+                                            <mat-datepicker-actions>
+                                                <button mat-button (click)="conversationForm.get('dueDate').setValue(null)" matDatepickerCancel>Clear</button>
+                                                <button class="" mat-flat-button [color]="'primary'" matDatepickerApply>Select</button>
+                                            </mat-datepicker-actions>
+                                        </mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <mat-divider class="mt-12 mb-12"></mat-divider>
+            
+                    <!-- Description -->
+                    <div class="mt-12">
+                        <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput [formControlName]="'description'" [spellcheck]="false" cdkTextareaAutosize></textarea>
+                        </mat-form-field>
+                    </div>
+            
+                    <mat-divider class="mt-12 mb-12"></mat-divider>
+            
+                    <!-- Additional details -->
+                    <div class="flex flex-col mt-12">
+                        <p class="font-semibold">Additional details</p>
+                        <div class="mt-4">
+                            <button mat-button [color]="'primary'">
+                                <mat-icon [svgIcon]="'heroicons_outline:photograph'"></mat-icon>
+                                <span class="ml-2">Add attachment</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Ayuda -->
+            <div class="w-1/4 h-full bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5 overflow-y-auto">
+                <h1 class="p-4 border-b border-red">Guidance</h1>
+                <p class="p-12" id="help-text"></p>
+            </div>    
+        </div>
+    </form>         
+</div>

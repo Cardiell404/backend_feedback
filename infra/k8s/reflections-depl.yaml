@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reflections-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reflections
+  template:
+    metadata:
+      labels:
+        app: reflections
+    spec:
+      containers:
+        - name: reflections
+          image: cardiell1/reflections
+          ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reflections-srv
+spec:
+  selector:
+    app: reflections
+  ports:
+    - name: reflections
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

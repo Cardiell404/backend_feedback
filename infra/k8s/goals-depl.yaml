@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goals-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goals
+  template:
+    metadata:
+      labels:
+        app: goals
+    spec:
+      containers:
+        - name: goals
+          image: cardiell1/goals
+          ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goals-srv
+spec:
+  selector:
+    app: goals
+  ports:
+    - name: goals
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

@@ -1,0 +1,45 @@
+services:
+
+  Feedback.employee.EmployeeRepository:
+    class: '../../infrastructure/persistence/mongo/MongoEmployeeRepository'
+    arguments: ['@Shared.ConnectionManager']
+
+  Feedback.employee.EmployeeCreator:
+    class: ../../application/Create/EmployeeCreator
+    arguments: ['@Feedback.employee.EmployeeRepository', '@Shared.domain.EventBus']
+
+  Feedback.employee.CreateEmployeeCommandHandler:
+    class: ../../application/Create/CreateEmployeeCommandHandler
+    arguments: ['@Feedback.employee.EmployeeCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.employee.EmployeeUpdater:
+    class: ../../application/Update/EmployeeUpdater
+    arguments: ['@Feedback.employee.EmployeeRepository']
+
+  Feedback.employee.UpdateEmployeeCommandHandler:
+    class: ../../application/Update/UpdateEmployeeCommandHandler
+    arguments: ['@Feedback.employee.EmployeeUpdater']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.employee.EmployeesByCriteriaSearcher:
+    class: '../../application/SearchAllByCriteria/EmployeesByCriteriaSearcher'
+    arguments: ["@Feedback.employee.EmployeeRepository"]
+
+  Feedback.employee.SearchEmployeesByCriteriaQueryHandler:
+    class: '../../application/SearchAllByCriteria/SearchEmployeesByCriteriaQueryHandler'
+    arguments: ["@Feedback.employee.EmployeesByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.employee.EmployeeByCriteriaSearcher:
+    class: '../../application/SearchByCriteria/EmployeeByCriteriaSearcher'
+    arguments: ["@Feedback.employee.EmployeeRepository"]
+
+  Feedback.employee.SearchEmployeeByCriteriaQueryHandler:
+    class: '../../application/SearchByCriteria/SearchEmployeeByCriteriaQueryHandler'
+    arguments: ["@Feedback.employee.EmployeeByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }

@@ -1,0 +1,65 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0"> </div>
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+            <div class="ml-3">
+                <div class="flex items-center mt-1.5 px-4 leading-9 rounded-full cursor-pointer" 
+                [ngClass]="{'text-green-800 bg-green-200 dark:text-green-100 dark:bg-green-500': task.priority === 0,
+                                'text-gray-800 bg-gray-200 dark:text-gray-100 dark:bg-gray-500': task.priority === 1,
+                                'text-red-800 bg-red-200 dark:text-red-100 dark:bg-red-500': task.priority === 2}"
+                    [matMenuTriggerFor]="priorityMenu">
+
+                    <ng-container *ngIf="task.priority === 0">
+                        <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:arrow-narrow-down'"></mat-icon>
+                        <span class="ml-2 mr-1 text-md font-medium">Low</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="task.priority === 1">
+                        <mat-icon class="icon-size-4 text-current" [svgIcon]="'heroicons_solid:minus'"></mat-icon>
+                        <span class="ml-2 mr-1 text-md font-medium">Normal</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="task.priority === 2">
+                        <mat-icon class="icon-size-4 text-current" [svgIcon]="'heroicons_solid:arrow-narrow-up'"></mat-icon>
+                        <span class="ml-2 mr-1 text-md font-medium">High</span>
+                    </ng-container>
+                </div>
+                <mat-menu #priorityMenu="matMenu">
+                    <button [ngClass]="{'bg-hover': task.priority === 0}" mat-menu-item (click)="setTaskPriority(0)">
+                        <span class="inline-flex items-center justify-between w-full min-w-30 leading-5">
+                            <span class="font-medium">Low</span>
+                            <mat-icon class="mr-0 icon-size-4 text-green-600 dark:text-green-500" [svgIcon]="'heroicons_solid:arrow-narrow-down'"></mat-icon>
+                        </span>
+                    </button>
+
+                    <button [ngClass]="{'bg-hover': task.priority === 1}" mat-menu-item (click)="setTaskPriority(1)">
+                        <span class="inline-flex items-center justify-between w-full min-w-30 leading-5">
+                            <span class="font-medium">Normal</span>
+                            <mat-icon class="mr-0 icon-size-4 text-gray-600 dark:text-gray-500" [svgIcon]="'heroicons_solid:minus'"></mat-icon>
+                        </span>
+                    </button>
+
+                    <button [ngClass]="{'bg-hover': task.priority === 2}" mat-menu-item (click)="setTaskPriority(2)">
+                        <span class="inline-flex items-center justify-between w-full min-w-30 leading-5">
+                            <span class="font-medium">High</span>
+                            <mat-icon class="mr-0 icon-size-4 text-red-600 dark:text-red-500" [svgIcon]="'heroicons_solid:arrow-narrow-up'"></mat-icon>
+                        </span>
+                    </button>
+                </mat-menu>
+            </div>
+            <button class="ml-3" mat-flat-button [color]="'primary'" (click)="addFeedback()">
+                <span class="ml-2">Create</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex-auto p-6 sm:p-8 sm:pt-4 overflow-y-auto">
+        <div class="flex justify-evenly mx-20">
+            Summary
+        </div>
+    </div>
+</div>
+
+<div class="absolute invisible w-0 h-0 opacity-0 pointer-events-none">
+    <router-outlet></router-outlet>
+</div>

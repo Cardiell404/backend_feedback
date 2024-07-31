@@ -1,0 +1,46 @@
+services:
+
+  Feedback.goal.GoalRepository:
+    class: ../../infrastructure/persistence/mongo/MongoGoalRepository
+    arguments: ['@Shared.ConnectionManager']
+
+  Feedback.goal.GoalCreator:
+    class: ../../application/Create/GoalCreator
+    arguments: ['@Feedback.goal.GoalRepository']
+
+  Feedback.goal.CreateGoalCommandHandler:
+    class: ../../application/Create/CreateGoalCommandHandler
+    arguments: ['@Feedback.goal.GoalCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.goal.GoalUpdater:
+    class: ../../application/Update/GoalUpdater
+    arguments: ['@Feedback.goal.GoalRepository']
+
+  Feedback.goal.UpdateGoalCommandHandler:
+    class: ../../application/Update/UpdateGoalCommandHandler
+    arguments: ['@Feedback.goal.GoalUpdater']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.goal.GoalByCriteriaSearcher:
+    class: '../../application/SearchByCriteria/GoalByCriteriaSearcher'
+    arguments: ["@Feedback.goal.GoalRepository"]
+
+  Feedback.goal.SearchGoalByCriteriaQueryHandler:
+    class: '../../application/SearchByCriteria/SearchGoalByCriteriaQueryHandler'
+    arguments: ["@Feedback.goal.GoalByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.goal.GoalsByCriteriaSearcher:
+    class: '../../application/SearchAllByCriteria/GoalsByCriteriaSearcher'
+    arguments: ["@Feedback.goal.GoalRepository"]
+
+  Feedback.goal.SearchGoalsByCriteriaQueryHandler:
+    class: '../../application/SearchAllByCriteria/SearchGoalsByCriteriaQueryHandler'
+    arguments: ["@Feedback.goal.GoalsByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }
+      

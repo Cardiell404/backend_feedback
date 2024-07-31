@@ -1,0 +1,38 @@
+services:
+
+  Apps.feedback.controllers.StatusGetController:
+    class: ../../controllers/StatusGetController
+    arguments: []
+
+  Apps.feedback.controllers.AuthController:
+    class: ../../controllers/auth/AuthController
+    arguments: ["@Shared.QueryBus", "@Shared.Crypto"]
+
+  Apps.feedback.controllers.AuthCurrentUserController:
+    class: ../../controllers/auth/AuthCurrentUserController
+    arguments: ["@Shared.QueryBus"]
+
+
+  Apps.feedback.controllers.AuthSignOutController:
+    class: ../../controllers/auth/AuthSignOutController
+    arguments: []
+
+  Apps.feedback.controllers.UserPostController:
+    class: ../../controllers/users/UserPostController
+    arguments: ["@Shared.CommandBus", "@Shared.Crypto"]
+
+  Apps.feedback.controllers.UserPutController:
+    class: ../../controllers/users/UserPutController
+    arguments: ["@Shared.CommandBus"]
+
+  Apps.feedback.controllers.UsersGetByCriteriaController:
+    class: ../../controllers/users/UsersGetByCriteriaController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.UserGetByIdController:
+    class: ../../controllers/users/UserGetByIdController
+    arguments: ["@Shared.QueryBus"]
+
+  Apps.feedback.controllers.UserUploadAvatarController:
+    class: ../../controllers/users/UserUploadAvatarController
+    arguments: ["@Shared.QueryBus"]

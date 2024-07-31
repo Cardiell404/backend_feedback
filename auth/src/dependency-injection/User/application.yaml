@@ -1,0 +1,59 @@
+services:
+
+  Feedback.user.UserRepository:
+    class: ../../Contexts/Users/infrastructure/persistence/mongo/MongoUserRepository
+    arguments: ['@Shared.ConnectionManager']
+
+  Feedback.user.BucketRepository:
+    class: ../../Contexts/Shared/infrastructure/bucket/s3/S3BucketRepository
+    arguments: ['@Shared.BucketManager']
+
+  Feedback.user.UserCreator:
+    class: ../../Contexts/Users/application/Create/UserCreator
+    arguments: ['@Feedback.user.UserRepository', '@Feedback.employee.EmployeeRepository']
+
+  Feedback.user.CreateUserCommandHandler:
+    class: ../../Contexts/Users/application/Create/CreateUserCommandHandler
+    arguments: ['@Feedback.user.UserCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.user.UserUpdater:
+    class: ../../Contexts/Users/application/Update/UserUpdater
+    arguments: ['@Feedback.user.UserRepository']
+
+  Feedback.user.UpdateUserCommandHandler:
+    class: ../../Contexts/Users/application/Update/UpdateUserCommandHandler
+    arguments: ['@Feedback.user.UserUpdater']
+    tags:
+      - { name: 'commandHandler' }
+
+  Feedback.user.UserByCriteriaSearcher:
+    class: '../../Contexts/Users/application/SearchByCriteria/UserByCriteriaSearcher'
+    arguments: ["@Feedback.user.UserRepository"]
+
+  Feedback.user.SearchUserByCriteriaQueryHandler:
+    class: '../../Contexts/Users/application/SearchByCriteria/SearchUserByCriteriaQueryHandler'
+    arguments: ["@Feedback.user.UserByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.user.UploadAvatar:
+    class: '../../Contexts/Users/application/Upload/UploadAvatar'
+    arguments: ["@Feedback.user.BucketRepository"]
+
+  Feedback.user.UploadAvatarQueryHandler:
+    class: '../../Contexts/Users/application/Upload/UploadAvatarQueryHandler'
+    arguments: ["@Feedback.user.UploadAvatar"]
+    tags:
+      - { name: 'queryHandler' }
+
+  Feedback.user.UsersByCriteriaSearcher:
+    class: '../../Contexts/Users/application/SearchAllByCriteria/UsersByCriteriaSearcher'
+    arguments: ["@Feedback.user.UserRepository"]
+
+  Feedback.user.SearchUsersByCriteriaQueryHandler:
+    class: '../../Contexts/Users/application/SearchAllByCriteria/SearchUsersByCriteriaQueryHandler'
+    arguments: ["@Feedback.user.UsersByCriteriaSearcher"]
+    tags:
+      - { name: 'queryHandler' }
